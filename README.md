@@ -26,7 +26,6 @@ OrbDoc is a straightforward application that allows users to search for medical 
     git clone https://github.com/yourusername/orbdoc.git
     cd orbdoc
     ```
-   ```
 
 2. Install the dependencies for the React frontend:
 
