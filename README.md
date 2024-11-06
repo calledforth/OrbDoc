@@ -1,4 +1,31 @@
-# OrbDocOrbDoc is a straightforward application that allows users to search for medical terms, provides simple definitions, and shows related terms. The application also implements basic favorites functionality to enhance the user experience. The focus is on providing a seamless search experience and clear information display.## Features- Search for medical terms- View simple definitions of medical terms- See related terms- Add terms to favorites for quick access## Getting Started### Prerequisites- Node.js- npm (Node Package Manager)- Python- Flask### Installation1. Clone the repository:   ```sh   git clone https://github.com/yourusername/orbdoc.git   cd orbdoc
+# OrbDoc
+
+OrbDoc is a straightforward application that allows users to search for medical terms, provides simple definitions, and shows related terms. The application also implements basic favorites functionality to enhance the user experience. The focus is on providing a seamless search experience and clear information display.
+
+## Features
+
+- Search for medical terms
+- View simple definitions of medical terms
+- See related terms
+- Add terms to favorites for quick access
+
+## Getting Started
+
+### Prerequisites
+
+- Node.js
+- npm (Node Package Manager)
+- Python
+- Flask
+
+### Installation
+
+1. Clone the repository:
+
+    ```sh
+    git clone https://github.com/yourusername/orbdoc.git
+    cd orbdoc
+    ```
    ```
 
 2. Install the dependencies for the React frontend:
