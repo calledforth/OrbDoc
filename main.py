@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
 
 import os
@@ -14,15 +14,12 @@ history = []
 def chatbot():
     data = request.get_json()
     print("Data received: ", data.get("query"))
-    response = gemini_call(data.get("query"))
-    return jsonify(response)
+    return Response(gemini_call(data.get("query")), mimetype="text/event-stream")
 
 
 def gemini_call(query):
-
     genai.configure(api_key=os.environ["GEMINI_API_KEY"])
 
-    # Create the model
     generation_config = {
         "temperature": 1,
         "top_p": 0.95,
@@ -41,6 +38,7 @@ def gemini_call(query):
     response = chat_session.send_message(query, stream=True)
     for chunk in response:
         print(chunk.text)
+        yield chunk.text
 
 
 if __name__ == "__main__":

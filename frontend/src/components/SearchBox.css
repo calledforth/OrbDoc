@@ -2,8 +2,9 @@
     height: 90vh;
     width: 100%;
     display: flex;
-    justify-content: center;
-    align-items: end;
+    flex-direction: column;
+    justify-content: end;
+    align-items: center;
     margin-top: 20px;
 }
 
@@ -347,3 +348,53 @@
     border: 1px solid transparent;
   }
   
+.scrollable-area {
+    height: 100vh;
+    width: 100%;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: rgb(230, 5, 5);
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: #888 #333;
+  }
+
+  .scrollable-area::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  .scrollable-area::-webkit-scrollbar-track {
+    background: #333;
+    border-radius: 10px;
+  }
+
+  .scrollable-area::-webkit-scrollbar-thumb {
+    background-color: #888;
+    border-radius: 10px;
+    border: 2px solid #333;
+  }
+
+
+  .user-msg {
+    /* background-color: #00000080; */
+    padding: 20px 100px;
+    width: 40%;
+    color: white;
+    text-align: end;
+    border-bottom: #ffffff53 1px solid;
+    font-family: "Roboto", sans-serif;
+    font-size: 20px;
+    font-weight: 550;
+  }
+
+  .chatbot-msg {
+    padding: 20px 50px; 
+    margin: 10px; 
+    width: 50%;
+    color: white;
+    text-align: left;
+    font-family: "Roboto", sans-serif;
+    font-size: 20px;
+  }
