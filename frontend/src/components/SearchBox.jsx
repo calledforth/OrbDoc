@@ -39,7 +39,9 @@ export default function SearchBox() {
   const openModal = async () => {
     setIsModalOpen(true);
     try {
-      const response = await fetch("http://localhost:5000/load_documents");  // Replace with your backend API endpoint
+      const response = await fetch("http://localhost:5000/load_saved",
+        { method: "GET" }
+      );
       const data = await response.json();
       setDocuments(data);
     } catch (error) {
@@ -182,13 +184,19 @@ export default function SearchBox() {
       {isModalOpen && (
         <div className="modal-overlay">
           <div className="modal">
-          <h2>Saved Documents</h2>
-            <div className="document-list">
-              {documents.map((doc, index) => (
-                <ReactMarkdown key={index}>{doc.content}</ReactMarkdown>
+          <h2>Saved Documents</h2> 
+          <div className="scrollable-area" ref={scrollableAreaRef}>
+          <div className="document-list">
+          {documents.map((doc, index) => (
+                <div key={index} className="document">
+                  <ReactMarkdown>{doc}</ReactMarkdown>
+                </div>
               ))}
             </div>
             <button onClick={closeModal}>Close</button>
+            
+          </div>
+            
           </div>
         </div>
       )}

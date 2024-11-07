@@ -1,6 +1,8 @@
 from flask import Flask, request, jsonify, Response
 from flask_cors import CORS
 
+from urllib.parse import quote_plus
+
 import os
 from pymongo import MongoClient
 from pymongo.server_api import ServerApi
@@ -58,13 +60,13 @@ def gemini_call(query):
 def save():
     data = request.get_json()
 
-    uri = os.environ["MONGODB_URI"]
-
-    client = MongoClient(uri, server_api=ServerApi("1"))
-
     try:
-        db = client["orbdoc"]
-        collection = db["saved_data"]
+        client = MongoClient(
+            "mongodb+srv://2022cs0113:95eznFsnx5xteujv@orbdoc.8djye.mongodb.net/?retryWrites=true&w=majority&appName=orbdoc"
+        )
+
+        db = client.get_database("orbdoc")
+        collection = db.get_collection("saved_data")
         collection.insert_one(data)
         print("Data saved")
 
@@ -76,14 +78,17 @@ def save():
 
 @app.route("/load_saved", methods=["GET"])
 def load():
-    client = MongoClient(os.environ["MONGODB_URI"])
-    db = client["orbdoc"]
-    collection = db["saved_data"]
+    client = MongoClient(
+        "mongodb+srv://2022cs0113:95eznFsnx5xteujv@orbdoc.8djye.mongodb.net/?retryWrites=true&w=majority&appName=orbdoc"
+    )
+    db = client.get_database("orbdoc")
+    collection = db.get_collection("saved_data")
 
     data = collection.find()
     response = []
     for item in data:
-        response.append(item)
+        response.append(item["saveItem"])
+    print("SENT")
     return jsonify(response)
 
 
