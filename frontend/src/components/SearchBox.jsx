@@ -5,6 +5,8 @@ import "./SearchBox.css";
 export default function SearchBox() {
   const [searchTerm, setSearchTerm] = useState("");
   const [messages, setMessages] = useState([]);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [documents, setDocuments] = useState([]);
   const [currentResponse, setCurrentResponse] = useState("");
   const scrollableAreaRef = useRef(null);
   let saveData = "";
@@ -32,6 +34,17 @@ export default function SearchBox() {
   catch (error) {
     console.error("Error:", error);
   }
+  };
+
+  const openModal = async () => {
+    setIsModalOpen(true);
+    try {
+      const response = await fetch("http://localhost:5000/load_documents");  // Replace with your backend API endpoint
+      const data = await response.json();
+      setDocuments(data);
+    } catch (error) {
+      console.error("Error fetching documents:", error);
+    }
   };
  
   const handleSubmit = async (e) => {
@@ -71,6 +84,10 @@ export default function SearchBox() {
     } catch (error) {
       console.error("Error:", error);
     }
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -158,7 +175,23 @@ export default function SearchBox() {
             </button>
           </form>
         </div>
+        <button className="save-button" onClick={openModal}>
+          Saved
+        </button>
       </div>
+      {isModalOpen && (
+        <div className="modal-overlay">
+          <div className="modal">
+          <h2>Saved Documents</h2>
+            <div className="document-list">
+              {documents.map((doc, index) => (
+                <ReactMarkdown key={index}>{doc.content}</ReactMarkdown>
+              ))}
+            </div>
+            <button onClick={closeModal}>Close</button>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
