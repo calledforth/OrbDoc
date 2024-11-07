@@ -58,3 +58,19 @@ OrbDoc is a straightforward application that allows users to search for medical 
    ```
 
 3. Open your browser and navigate to `http://localhost:5173` to use the application.
+
+### Detailed Information about `main.py`
+
+The `main.py` file is the entry point for the Flask backend server. It handles the API endpoints and serves the backend logic for the application. Here are the key functionalities:
+
+- **POST /save**: Saves a specific message from the conversation.
+- **GET /load_saved**: Fetches saved documents from the server.
+- **POST /chatbot**: Sends a query to the chatbot and receives a response.
+
+To run `main.py`, ensure you have Flask installed and the required dependencies from `requirements.txt`. Then, you can start the Flask server using the following command:
+
+```sh
+flask run
+```
+
+Make sure you are in the `backend` directory when running this command.
