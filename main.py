@@ -3,6 +3,7 @@ from flask_cors import CORS
 
 import os
 from pymongo import MongoClient
+from pymongo.server_api import ServerApi
 import google.generativeai as genai
 
 app = Flask(__name__)
@@ -37,7 +38,12 @@ def gemini_call(query):
         Provides clear, simple definitions
         Displays related terms
         All responses should be concise and formatted in italics for a polished, professional look.
-        Also include links and references in your response""",
+        your response must contain three main sections : 
+        1. Definition : A clear, concise definition of the term.
+        2. Related Terms : A list of related terms (minimum 10) that the user might find useful. (in a numeric list)
+        3. Examples : Examples of how the term is used in a medical context.
+        4. References : A list of references / links that the user can consult for more information.
+        enclose the links in special formatting to make them stand out.""",
     )
 
     chat_session = model.start_chat(history=history)
@@ -51,12 +57,34 @@ def gemini_call(query):
 @app.route("/save", methods=["POST"])
 def save():
     data = request.get_json()
-    client = MongoClient(os.environ["MONGODB_URI"])
-    db = client["chatbot_db"]
-    collection = db["chat_history"]
 
-    result = collection.insert_one(data)
-    return jsonify({"status": "success", "inserted_id": str(result.inserted_id)})
+    uri = os.environ["MONGODB_URI"]
+
+    client = MongoClient(uri, server_api=ServerApi("1"))
+
+    try:
+        db = client["orbdoc"]
+        collection = db["saved_data"]
+        collection.insert_one(data)
+        print("Data saved")
+
+    except Exception as e:
+        print(e)
+
+    return jsonify({"status": "success"})
+
+
+@app.route("/load_saved", methods=["GET"])
+def load():
+    client = MongoClient(os.environ["MONGODB_URI"])
+    db = client["orbdoc"]
+    collection = db["saved_data"]
+
+    data = collection.find()
+    response = []
+    for item in data:
+        response.append(item)
+    return jsonify(response)
 
 
 if __name__ == "__main__":
