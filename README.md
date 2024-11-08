@@ -1,4 +1,7 @@
+
 # OrbDoc
+
+https://github.com/user-attachments/assets/edd4f3b3-9648-461d-ae8c-73f54829a483
 
 OrbDoc is a straightforward application that allows users to search for medical terms, provides simple definitions, and shows related terms. The application also implements basic favorites functionality to enhance the user experience. The focus is on providing a seamless search experience and clear information display.
 
